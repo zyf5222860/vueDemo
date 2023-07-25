@@ -251,3 +251,4 @@ export default {
   background-color: rgba(182, 205, 208, 0.901) !important;
 }
 </style>
+  
