@@ -2,20 +2,30 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import store from '@/store'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  }
+  ,
+  {
+    path: '/',
     name: 'home',
     component: ()=> import('../views/HomeView.vue'),
-    redirect:"/home", //重定向默认到主页
+    redirect:"/home", //重定向默认到主页cd
     children:[{
       path: '/user',name: '用户管理', component: ()=> import('../components/User.vue')
     },{
       path: '/home',name: '主页', component: ()=> import('../components/Home.vue')
-    }],
+    },{
+      path: '/person',name: '个人信息', component: ()=> import('../views/Person.vue')
+    }
+  ],
   },
   {
     path: '/about',

@@ -5,6 +5,8 @@ const request = axios.create({
       baseURL: 'http://localhost:9090' , //测试环境
     timeout: 5000
 })
+const apiUrl = "http://localhost:9090";
+
 
 // request 拦截器
 // 可以自请求发送前对请求做一些处理
@@ -40,5 +42,5 @@ request.interceptors.response.use(
 )
 
 
-export default request
-
+export default  request
+ 
