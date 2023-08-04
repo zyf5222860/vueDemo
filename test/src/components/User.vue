@@ -1,23 +1,7 @@
 <template>
   <div>
     <el-dialog title="个人信息" :visible.sync="dialogFormVisible" width="30%">
-      <el-form :model="form" label-width="70px" size="small">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="form.email" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="form.address" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
+        
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="save()">确 定</el-button>
@@ -25,11 +9,11 @@
     </el-dialog>
 
  
-      <div>
+      <div style="display: flex;">
         <el-input
           style="width: 200px"
           suffix-icon="el-icon-search"
-          placeholder="请输入名称搜索"
+          placeholder="请输入用户名搜索"
           v-model="username"
           clearable
         ></el-input>
@@ -50,17 +34,26 @@
         <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
         <el-button class="ml-5" type="warning" @click="reset">清空</el-button>
       </div>
-      <div style="margin: 10px 0">
+      <div style="margin: 10px 0;display: flex;">
         <el-button type="primary" @click="add"
           >新增<i class="el-icon-circle-plus-outline"></i
         ></el-button>
-        <el-button type="danger" @click="batchDelete"
+        <el-button type="danger" @click="batchDelete" style="margin-left: 5px;"
           >批量删除<i class="el-icon-remove-outline"></i
         ></el-button>
-        <el-button type="primary"
+        <el-upload class="avatar-uploader"
+        :action="ExcelPath"  
+        :show-file-list="false"
+        :before-upload="beforeAvatarUpload"
+        :on-success="handleAvatarSuccess" 
+         style="display: inline-block;" >
+          <el-button type="primary"   
+           accept="xlsx"  style="margin-left: 5px;"
           >导入<i class="el-icon-download"></i
         ></el-button>
-        <el-button type="primary"
+        </el-upload>
+       
+        <el-button type="primary" @click="exp"  style="margin-left: 5px;"
           >导出<i class="el-icon-upload2"></i
         ></el-button>
       </div>
@@ -113,8 +106,13 @@
 
 <script>
 import request from "../utils/request";
+import Store from "@/components/Store.vue"; // 引用模块
+
 export default {
   name: "User",
+  components:{
+    Store
+  },
   props: {
    },
   data() {
@@ -129,7 +127,11 @@ export default {
       dialogFormVisible: false,
       form: {},
       hearderBg: "hearderBg",
-      multipleSelection: []
+      multipleSelection: [],
+      ExcelPath: "",
+      apiUrl: Store.data().apiUrl
+       
+    
     };
   },
   created() {
@@ -194,7 +196,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          request.POST("/user/" + id);
+          request.post("/user/" + id);
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -224,7 +226,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.request.post("/user/batch/delete", ids);
+          request.post("/user/batch/delete", ids);
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -242,8 +244,44 @@ export default {
         this.username = "";
         this.address = "";
         this.email = "";
-    }
-  }
+    },
+    exp(){
+      window.open("http://localhost:9090/user/export")
+    },
+    beforeAvatarUpload(file){  //上传前回调
+      console.log(file);
+      const index = file.name.lastIndexOf('.');
+      const XlsType = file.name.substring(index + 1);
+      console.log("附件类型"+XlsType);  //截取小数点后的类型，然后数组的第一个就是类型
+      const isExcel = XlsType === 'xlsx';  
+      console.log("api地址"+this.apiUrl);  // 
+       if(isExcel){
+        return new Promise((resolve) => {
+             this.$nextTick(() => {
+             this.ExcelPath = this.apiUrl + "/user/import";  //我这里采用字符串拼接，动态重写文件上传路径，这里的路径是专门上传视频的。
+               resolve();
+             });
+            })
+      }else{
+        this.$message({
+          message: '上传格式不准确!请上传EXCEL文件',
+          type: 'warning',
+                  duration: 6000
+        })
+        return false;
+      }
+ 
+  },
+  handleAvatarSuccess(response, file, fileList){   //上传成功后的回调函数
+             console.log(response, file, fileList);
+             this.$message({
+          message: '上传成功',
+          type: 'success',
+                  duration: 6000
+        })
+        this.load();
+       }
+}
 };
 </script>
 <style>
