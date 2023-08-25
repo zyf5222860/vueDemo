@@ -7,7 +7,7 @@
 <template>
     <div class="login-container">
         <div class="pageHeader">
-           <img src="../assets/wsx1.png" alt="logo">
+           <!-- <img src="../assets/w.png" alt="logo"> -->
           <!-- <span>cy的管理平台</span> --> 
         </div>
   
@@ -171,6 +171,10 @@
           userPwd2: '',
           userPwd: '',
         },
+        userToken: {
+          time : new Date().getTime(),
+          token : ''
+        },
         // formReset: {
         //   userName: '',
         //   userPwd2: '',
@@ -267,10 +271,15 @@
           debugger;
           if (res.code == 0) {
             this.clearInput();
+            this.userToken.token = res.data.token;
+            // 将token本地存储到回话中
+             localStorage.setItem('token', this.userToken.token);
+          
             this.$message.success('登录成功');
             this.$store.dispatch('userInfo/saveInfo', res.data);
             this.$router.push('/home');
           } else {
+            debugger;
             this.$message.error(res.message);
           }
   
@@ -316,7 +325,6 @@
             this.clearInput();
             this.$message.success('注册成功');
             this.handleTab(0);
-            // this.$router.push('/Login');
           } else {
             this.$message.error(res.message);
           }
@@ -389,7 +397,7 @@
   
   <style lang="scss" scoped>
   .login-container {
-    background-image: url('../assets/background.jpg');
+    background-image: url('../assets/bingyuhuo.jpg');
     background-size: cover;
     background-position: center center;
     /* width: 100%; */

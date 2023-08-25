@@ -11,7 +11,7 @@
         style="display: inline-block; margin-left: 15px"
       >
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>{{ currentPathName }}</el-breadcrumb-item>
+        <el-breadcrumb-item v-show="showBread">{{$route.meta.title}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-dropdown style="width: 70px; cursor: pointer">
@@ -41,32 +41,41 @@ export default {
     isCollapse: Boolean,
     collapseBtnClass: String,
     collapse: Function,
+    user: Object
   },
   computed: {
-    currentPathName() {
-      return this.$store.state.currentPathName; //需要监听的数据
-    },
     getUser(){
+      debugger;
       return this.$store.getters.user.data;//
     }
   },
   watch: {
-    //监听路由变化
-    currentPathName(newVal, oldVal) {
-      console.log(newVal);
-    },
+    '$route' (to, from) {
+      debugger;
+      if (to.path !== '/' && to.path !== '/home') {
+        this.showBread = true
+        console.log(this.showseparator)
+      } else {
+        this.showBread = false
+        this.showseparator = 'HEY'
+        console.log(this.showseparator)
+      }
+    }
   },
+
   data() {
     return {
-      user: localStorage.getItem("store") ? JSON.parse(localStorage.getItem("store")).userInfo.data : {}
+      // user: localStorage.getItem("store") ? JSON.parse(localStorage.getItem("store")) : {},
+      showBread: false
     
     };
   },
   methods: {
     layout(){
-      this.$router.push('/');
-      localStorage.removeItem("store");
+      debugger;
+      localStorage.removeItem("token");
       this.$message.success('登出成功');
+      this.$router.push('/');
     }
   },
 };

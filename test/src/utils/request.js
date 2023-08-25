@@ -1,21 +1,25 @@
 import axios from 'axios'
-
+import { apiUrl } from './url'
+import { url } from './url'
 const request = axios.create({
-	// baseURL: 'http://39.108.2.123:9090/fan',  //生产环境
-      baseURL: 'http://localhost:9090' , //测试环境
+	baseURL: url,  //生产环境
     timeout: 5000
-})
-const apiUrl = "http://localhost:9090";
+});
 
 
 // request 拦截器
 // 可以自请求发送前对请求做一些处理
 // 比如统一加token，对请求参数统一加密
 request.interceptors.request.use(config => {
-    config.headers['Content-Type'] = 'application/json;charset=utf-8';
+   //判断token是否存在
+ if (localStorage.getItem('token')) {
+    // 在请求头中添加token
+      // config.headers.token = localStorage.getItem('token');
+      config.headers['token'] = localStorage.getItem('token');
+      config.headers['Content-Type'] = 'application/json;charset=utf-8';
   
- // config.headers['token'] = user.token;  // 设置请求头
-    return config   
+    }
+    return config;
 }, error => {
     return Promise.reject(error) 
 });

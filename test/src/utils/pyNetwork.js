@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import axios from 'axios'
-import { url } from './url'
+import { pyUrl } from './url'
 import store from '../store'
 
 // 创建实例
 const service = axios.create({
-  baseURL: url, //
+  baseURL: pyUrl, //
   timeout: 55000
 })
 

@@ -19,30 +19,24 @@ Vue.prototype.axios=request;
 Vue.prototype.$Valid = Valid;
 Vue.config.productionTip = false
 
+/*引入axios插件*/
+import axios from 'axios'
+Vue.prototype.$http = axios;
+
+
 // 实现全局路由守卫
 router.beforeEach((to, from, next) => {
-	if (to.meta.title) {
-	  document.title = to.meta.title;
-	}
-
-	if (to.meta.requireAuth) {
-		if (store.state.userInfo.data.token) {
-			if (to.path == '/login') {
-        next('/');
-      } else {
-        next();
-      }
-		} else {
-			next('/login');
+	if(to.path === '/login'){
+		next();
+	  }else{
+		let token = localStorage.getItem('token');
+		if(token === 'null' || token === '' || token === undefined){
+		  next('/login')
+		}else{
+		  next();
 		}
-	} else {
-		if (store.state.userInfo.data.token) {
-			next('/');
-		} else {
-			next();
-		}
-	}
-
+	  }
+ 
 })
 
 new Vue({

@@ -1,21 +1,18 @@
 <template>
   <div>
-    <el-dialog title="个人信息" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="菜单信息" :visible.sync="dialogFormVisible" width="30%">
       <el-form :model="form">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+        <el-form-item label="名称" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="昵称" :label-width="formLabelWidth">
-          <el-input v-model="form.nickname" autocomplete="off"></el-input>
+        <el-form-item label="路径" :label-width="formLabelWidth">
+          <el-input v-model="form.path" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" :label-width="formLabelWidth">
-          <el-input v-model="form.email" autocomplete="off"></el-input>
+        <el-form-item label="图标" :label-width="formLabelWidth">
+          <el-input v-model="form.icon" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="地址" :label-width="formLabelWidth">
-          <el-input v-model="form.address" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" :label-width="formLabelWidth">
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
+        <el-form-item label="描述" :label-width="formLabelWidth">
+          <el-input v-model="form.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -29,24 +26,17 @@
         <el-input
           style="width: 200px"
           suffix-icon="el-icon-search"
-          placeholder="请输入用户名搜索"
-          v-model="username"
+          placeholder="请输入名称搜索"
+          v-model="name"
           clearable
         ></el-input>
         <el-input
-          style="width: 200px"
-          suffix-icon="el-icon-message"
-          placeholder="请输入邮箱搜索"
-          v-model="email"
-          clearable
-        ></el-input>
-        <el-input
-          style="width: 200px"
-          suffix-icon="el-icon-position"
-          placeholder="请输入地址搜索"
-          v-model="address"
-          clearable
-        ></el-input>
+        style="width: 200px"
+        suffix-icon="el-icon-search"
+        placeholder="请输入描述搜索"
+        v-model="description"
+        clearable
+      ></el-input>
         <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
         <el-button class="ml-5" type="warning" @click="reset">清空</el-button>
       </div>
@@ -81,19 +71,23 @@
         class="mt-10"
         :header-cell-class-name="hearderBg"
         @selection-change="handleSelectionChange"
+        row-key="id" default-expand-all
       >
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="ID" width="80"> </el-table-column>
-        <el-table-column prop="username" label="用户名" width="140">
+        <el-table-column type="selection"></el-table-column>
+        <el-table-column prop="id" label="ID" > </el-table-column>
+        <el-table-column prop="name" label="名称"  >
         </el-table-column>
-        <el-table-column prop="nickname" label="昵称" width="140">
+        <el-table-column prop="path" label="路径"  >
         </el-table-column>
-        <el-table-column prop="email" label="邮箱" width="120">
+        <el-table-column prop="icon" label="图标"  >
         </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
-        <el-table-column prop="phone" label="电话"> </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column prop="description" label="描述" >
+        </el-table-column>
+        <el-table-column label="操作"  width="300" >
           <template slot-scope="scope">
+            <el-button type="primary" @click="handleAdd(scope.row.id)" v-if="!scope.row.pid && !scope.row.path"
+            >新增子菜单<i class="el-icon-edit" style="margin-left: 5px"></i
+          ></el-button>
             <el-button type="success" @click="handleEdit(scope.row)"
               >编辑<i class="el-icon-edit" style="margin-left: 5px"></i
             ></el-button>
@@ -103,7 +97,7 @@
           </template>
         </el-table-column>
       </el-table>
-
+<!-- 
     <div class="block" style="padding: 10px 0">
       <span class="demonstration"></span>
       <el-pagination
@@ -116,7 +110,7 @@
         :total="total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -125,7 +119,7 @@ import request from "../utils/request";
 import Store from "@/components/Store.vue"; // 引用模块
 
 export default {
-  name: "User",
+  name: "Menu",
   components:{
     Store
   },
@@ -137,9 +131,9 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 5,
-      username: "",
-      email: "",
-      address: "",
+      name: "",
+      path:"",
+      description: "",
       dialogFormVisible: false,
       form: {},
       hearderBg: "hearderBg",
@@ -156,18 +150,18 @@ export default {
   },
   methods: {
     load() {
-      request.get("/user/page", { 
+      request.get("/menu", { 
           params: {
             pageNum: this.pageNum,
             pageSize: this.pageSize,
-            username: this.username,
-            email: this.email,
-            address: this.address,
+            name: this.name,
+            description: this.description
           },
         })
         .then((res) => {
-          console.log(res);
-          this.tableData = res.records;
+          debugger;
+          console.log(res.data);
+          this.tableData = res.data;
           this.total = res.total;
         });
     },
@@ -187,7 +181,7 @@ export default {
     },
     //新增用户接口
     save() {
-       request.post("/user/saveOrUpdate", this.form).then((res) => {
+       request.post("/menu/saveOrUpdate", this.form).then((res) => {
         if (res) {
           this.$message.success("保存成功");
           this.load();
@@ -198,6 +192,14 @@ export default {
         this.form = {};
         this.dialogFormVisible = false;
       });
+    },
+    //新增子菜单
+    handleAdd(pid){
+      this.dialogFormVisible=true;
+      this.form = {}
+      if(pid){
+        this.form.pid = pid;
+      }
     },
     //编辑
     handleEdit(row) {
@@ -213,7 +215,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          request.post("/user/" + id);
+          request.post("/menu/" + id);
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -243,7 +245,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          request.post("/user/batch/delete", ids);
+          request.post("/role/menu/delete", ids);
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -258,12 +260,12 @@ export default {
         });
     },
     reset(){
-        this.username = "";
-        this.address = "";
-        this.email = "";
+        this.name = "";
+        this.description = "";
+       
     },
     exp(){
-      window.open("http://localhost:9090/user/export")
+      window.open("http://localhost:9090/menu/export")
     },
     beforeAvatarUpload(file){  //上传前回调
       console.log(file);
@@ -275,7 +277,7 @@ export default {
        if(isExcel){
         return new Promise((resolve) => {
              this.$nextTick(() => {
-             this.ExcelPath = this.apiUrl + "/user/import";  //我这里采用字符串拼接，动态重写文件上传路径，这里的路径是专门上传视频的。
+             this.ExcelPath = this.apiUrl + "/role/import";  //我这里采用字符串拼接，动态重写文件上传路径，这里的路径是专门上传视频的。
                resolve();
              });
             })

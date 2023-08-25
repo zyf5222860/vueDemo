@@ -686,6 +686,16 @@
     "ansi-styles" "^4.1.0"
     "supports-color" "^7.1.0"
 
+"chartist@^0.11.0":
+  "integrity" "sha512-/nTvIP4XwNGbozZTUe8e9YfYB0wOSCdfY2eTNB//l3jUuKCUrZIZuzfpOVNyH9J8nLibghGu4WuKtxictmCV2g=="
+  "resolved" "https://registry.npmmirror.com/chartist/-/chartist-0.11.0.tgz"
+  "version" "0.11.0"
+
+"chartist@^0.11.4":
+  "integrity" "sha512-H4AimxaUD738/u9Mq8t27J4lh6STsLi4BQHt65nOtpLk3xyrBPaLiLMrHw7/WV9CmsjGA02WihjuL5qpSagLYw=="
+  "resolved" "https://registry.npmmirror.com/chartist/-/chartist-0.11.4.tgz"
+  "version" "0.11.4"
+
 "chownr@^2.0.0":
   "integrity" "sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ=="
   "resolved" "https://registry.npmmirror.com/chownr/-/chownr-2.0.0.tgz"
@@ -833,6 +843,14 @@
   "integrity" "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw=="
   "resolved" "https://registry.npmmirror.com/depd/-/depd-2.0.0.tgz"
   "version" "2.0.0"
+
+"echarts@^5.4.3":
+  "integrity" "sha512-mYKxLxhzy6zyTi/FaEbJMOZU1ULGEQHaeIeuMR5L+JnJTpz+YR03mnnpBhbR4+UYJAgiXgpyTVLffPAjOTLkZA=="
+  "resolved" "https://registry.npmmirror.com/echarts/-/echarts-5.4.3.tgz"
+  "version" "5.4.3"
+  dependencies:
+    "tslib" "2.3.0"
+    "zrender" "5.4.4"
 
 "electron-to-chromium@^1.4.477":
   "integrity" "sha512-shUVy6Eawp33dFBFIoYbIwLHrX0IZ857AlH9ug2o4rvbWmpaCUdBpQ5Zw39HRrfzAFm4APJE9V+E2A/WB0YqJw=="
@@ -1817,6 +1835,11 @@
   "resolved" "https://registry.npmmirror.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz"
   "version" "2.0.1"
 
+"process@^0.11.10":
+  "integrity" "sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A=="
+  "resolved" "https://registry.npmmirror.com/process/-/process-0.11.10.tgz"
+  "version" "0.11.10"
+
 "promise-inflight@^1.0.1":
   "integrity" "sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g=="
   "resolved" "https://registry.npmmirror.com/promise-inflight/-/promise-inflight-1.0.1.tgz"
@@ -2251,6 +2274,11 @@
   "resolved" "https://registry.npmmirror.com/tslib/-/tslib-2.6.1.tgz"
   "version" "2.6.1"
 
+"tslib@2.3.0":
+  "integrity" "sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg=="
+  "resolved" "https://registry.npmmirror.com/tslib/-/tslib-2.3.0.tgz"
+  "version" "2.3.0"
+
 "tsparticles-engine@^2.11.1":
   "integrity" "sha512-tkoCi2SWIVcOkxni6I+ECRz3xfSX2dP/Wn+Kt8Qga/BGWlSrdvLVUn3DbXNJq6h/6efs6n4Db6uFtkceSyRWGg=="
   "resolved" "https://registry.npmmirror.com/tsparticles-engine/-/tsparticles-engine-2.11.1.tgz"
@@ -2326,6 +2354,13 @@
   dependencies:
     "spdx-correct" "^3.0.0"
     "spdx-expression-parse" "^3.0.0"
+
+"vue-chartist@^3.0.0":
+  "integrity" "sha512-NDuwimeNZdYv1W09Kkrg4qfXCwFJPCJASL6X/iX7r/gvRHg5epodf7ZB5DWVAADNVOQzK+ifmokBz+NiQAA/Tg=="
+  "resolved" "https://registry.npmmirror.com/vue-chartist/-/vue-chartist-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "chartist" "^0.11.4"
 
 "vue-demi@*":
   "integrity" "sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA=="
@@ -2461,3 +2496,10 @@
     "string-width" "^4.2.3"
     "y18n" "^5.0.5"
     "yargs-parser" "^21.1.1"
+
+"zrender@5.4.4":
+  "integrity" "sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw=="
+  "resolved" "https://registry.npmmirror.com/zrender/-/zrender-5.4.4.tgz"
+  "version" "5.4.4"
+  dependencies:
+    "tslib" "2.3.0"

@@ -1,4 +1,6 @@
 import network from './network';
+import pyNetwork from './pyNetwork';
+import { pyUrl } from './url'
 import request from './request';
 
 // 登录
@@ -101,4 +103,26 @@ export function saveOrUpdate(data) {
     method: "post",
     data
   })
+}
+
+
+// 体育信息查询
+export function queryTiyuInfo(data) {
+  debugger
+  return network({
+    url: `/info/queryTiyuInfo`,
+    method: "post",
+    data
+  });
+}
+
+
+// python 查询测试
+export function queryPyTest(data) {
+  debugger
+  return pyNetwork({
+    url: `/api/query`,
+    method: "get",
+    data
+  });
 }
